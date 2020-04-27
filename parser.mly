@@ -70,33 +70,3 @@ expr:
 | expr OR     expr      { Binop($1, Or, $3) }
 | expr LBRACKET expr RBRACKET
                         { AggAccessor($1, $3) }
-
-expr_list:
-  /* nothing */        { [] }
-| expr                 { [$1] }
-| expr_list COMMA expr { $3 :: $1 }
-
-expr_list_ne:
-| expr                 { [$1] }
-| expr_list COMMA expr { $3 :: $1 }
-
-func_statement_list:
-| statement_list expr  { Expr($2) :: $1 }
-
-
-statement_list:
-  /* statement indicating nothing */  { [] }
-| statement_list statement { $2 :: $1 }
-
-string_lit:
-| STRINGLIT            { StringLit($1) }
-| BEGINTERSTRING mid_inter_string  ENDINTERSTRING      
-    { InterStringLit(
-        $1::( List.rev ($3::(fst $2)) ), 
-        List.rev (snd $2) ) 
-    }
-
-mid_inter_string:
-| expr    { ([], [$1]) }
-| mid_inter_string MIDINTERSTRING expr   
-    { ($2::(fst $1), $3::(snd $1)) }
