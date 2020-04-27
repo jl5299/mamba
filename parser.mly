@@ -3,9 +3,6 @@ Hi, welcome to our parser
  */
 %{ open Ast %}
 
-%token LBRACKET RBRACKET 
-%token LPAREN RPAREN
-%token LBRACE RBRACE
 %token DOT
 %token IN COLON COMMA END
 %token EQ NEQ LT LEQ GT GEQ AND OR
