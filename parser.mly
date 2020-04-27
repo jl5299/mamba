@@ -31,7 +31,6 @@ Hi, welcome to our parser
 %left PLUS MINUS
 %left TIMES DIVIDE
 %right NEG
-%left LPAREN LBRACKET
 %nonassoc DOT
 
 %start program
@@ -47,7 +46,6 @@ simple_typ:
 | BOOL                { PrimTyp(Bool) }
 | CHAR                { PrimTyp(Char) }
 | STRING              { String }
-| LPAREN typ RPAREN   { $2 }
 
 expr:
   ID                    { Id($1) }
@@ -68,5 +66,3 @@ expr:
 | expr GEQ    expr      { Binop($1, Geq,   $3) }
 | expr AND    expr      { Binop($1, And, $3) }
 | expr OR     expr      { Binop($1, Or, $3) }
-| expr LBRACKET expr RBRACKET
-                        { AggAccessor($1, $3) }
